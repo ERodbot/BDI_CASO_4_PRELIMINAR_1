@@ -9,6 +9,7 @@ CREATE PROCEDURE update_producer_SP
 	@new_name VARCHAR(30),
 	@new_env_score INT,
 	@new_zip_code INT
+WITH ENCRYPTION
 AS 
 BEGIN
 	

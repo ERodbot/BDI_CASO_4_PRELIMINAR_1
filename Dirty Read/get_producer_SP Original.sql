@@ -10,6 +10,7 @@ CREATE PROCEDURE get_producer_SP
 	@env_score INT OUTPUT,
 	@corporation VARCHAR(30) OUTPUT,
 	@zip_code INT OUTPUT
+WITH ENCRYPTION
 AS 
 BEGIN
 	SET NOCOUNT ON -- no retorne metadatos
