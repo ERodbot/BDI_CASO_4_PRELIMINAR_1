@@ -1,0 +1,11 @@
+Deadlock:
+-all
+
+Dirty Read: 
+-Done
+
+Lost Update:
+-Done
+
+Phantom Read:
+-all
