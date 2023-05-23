@@ -45,6 +45,7 @@ BEGIN
 			address_id = @new_address
 		WHERE producer_id = @producer_id;
 		WAITFOR DELAY '00:00:10';
+		ROLLBACK --simulación de error durante la ejecución del update.
 
 		IF @InicieTransaccion=1 BEGIN
 			COMMIT

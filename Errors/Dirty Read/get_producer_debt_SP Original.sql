@@ -4,12 +4,14 @@
 -- Descripcion: esta description en comentarios queda almacenada
 -- Otros detalles de los parametros
 -----------------------------------------------------------
-CREATE PROCEDURE get_producer_SP
+CREATE PROCEDURE get_producer_debt_SP
 	@name VARCHAR(30),
+	@amount DECIMAL(12,2),
 	@producer_id INT OUTPUT,
 	@env_score INT OUTPUT,
 	@corporation VARCHAR(30) OUTPUT,
-	@zip_code INT OUTPUT
+	@zip_code INT OUTPUT,
+	@debt DECIMAL(12,2) OUTPUT
 WITH ENCRYPTION
 AS 
 BEGIN
@@ -29,7 +31,7 @@ BEGIN
 	BEGIN TRY
 		SET @CustomError = 2001
 
-		SELECT @producer_id = producer_id, @env_score = env_score, @corporation = corp.name, @zip_code = addr.zip_code
+		SELECT @producer_id = producer_id, @env_score = env_score, @corporation = corp.name, @zip_code = addr.zip_code, @debt = @env_score * @amount
 		FROM producers prd
 		JOIN corporations corp ON prd.corporation_id = corp.corporation_id
 		JOIN addresses addr ON prd.address_id = addr.address_id
