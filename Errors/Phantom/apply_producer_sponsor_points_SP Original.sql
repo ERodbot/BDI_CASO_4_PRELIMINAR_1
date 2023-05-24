@@ -5,6 +5,7 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE apply_producer_sponsor_points_SP
+	-- procedimiento para aplicar los puntos donados por otro productor a producetores en un zipcode.
 	@zip_code INT,
 	@sponsor_points INT
 WITH ENCRYPTION
@@ -29,14 +30,15 @@ BEGIN
 	
 	BEGIN TRY
 		SET @CustomError = 2001
-		SET @count = (SELECT COUNT(*)
+		SET @count = (SELECT COUNT(*) -- count para hacer el calculo de los puntajes a donar a los count productores
 					  FROM producers prd
 					  JOIN addresses addr ON prd.address_id=addr.address_id
 					  WHERE zip_code = @zip_code);
 		SET @point_reduction = FLOOR(@sponsor_points / @count)
-		WAITFOR DELAY '00:00:10';
 
-		UPDATE prd
+		WAITFOR DELAY '00:00:10'; -- delay donde se inserta un nuevo productor que esta en el mismo zipdcode.
+
+		UPDATE prd -- asignacion de los puntajes calculados
 		SET env_score = env_score - @point_reduction
 		FROM producers prd
 		JOIN addresses addr ON prd.address_id=addr.address_id

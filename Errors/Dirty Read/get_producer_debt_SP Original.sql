@@ -5,6 +5,7 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE get_producer_debt_SP
+	-- procedimeinto para calcular el monto de la deuda ambiental de un productor.
 	@name VARCHAR(30),
 	@amount DECIMAL(12,2),
 	@producer_id INT OUTPUT,

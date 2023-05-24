@@ -5,6 +5,8 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE update_producer_SP
+	-- query para actualizar la información de un productor
+	-- query modificado (Solución)
 	@og_name VARCHAR(30),
 	@new_name VARCHAR(30),
 	@new_env_score INT,

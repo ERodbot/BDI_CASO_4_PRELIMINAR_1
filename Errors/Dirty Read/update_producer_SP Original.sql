@@ -5,6 +5,7 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE update_producer_SP
+	-- procedimiento para actualizar la información de un productor
 	@og_name VARCHAR(30),
 	@new_name VARCHAR(30),
 	@new_env_score INT,
@@ -44,7 +45,7 @@ BEGIN
 			env_score = @new_env_score,
 			address_id = @new_address
 		WHERE producer_id = @producer_id;
-		WAITFOR DELAY '00:00:10';
+		WAITFOR DELAY '00:00:10'; -- tiempo para ejecutar otro query
 		ROLLBACK --simulación de error durante la ejecución del update.
 
 		IF @InicieTransaccion=1 BEGIN

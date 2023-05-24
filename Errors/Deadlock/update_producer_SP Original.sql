@@ -5,6 +5,7 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE update_producer_SP
+	-- duncion para actualizar la información de un productor
 	@og_name VARCHAR(30),
 	@new_name VARCHAR(30),
 	@new_env_score INT,
@@ -32,13 +33,14 @@ BEGIN
 		SET @CustomError = 2001
 
 		SELECT @producer_id = producer_id
-		FROM producers with (TABLOCKX)
+		FROM producers with (TABLOCKX) -- se bloquea de forma exclusiva la tabla.
 		WHERE name = @og_name;
 
-		WAITFOR DELAY '00:00:10';
+		WAITFOR DELAY '00:00:10';  -- error se da durante este delay.
 
 		SELECT @new_address = address_id
-		FROM addresses with (TABLOCKX)
+		FROM addresses with (TABLOCKX) -- se bloquea de forma exclusiva la tabla.
+		WHERE name = @og_name;
 		WHERE zip_code = @new_zip_code;
 
 		UPDATE producers

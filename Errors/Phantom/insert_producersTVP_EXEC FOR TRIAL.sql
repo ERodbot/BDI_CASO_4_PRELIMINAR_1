@@ -1,5 +1,5 @@
 USE [Esencial Verde]
-
+-- EXEC para demostración ejecutar de 2°
 DECLARE @new_producers producersTVP;
 
 INSERT INTO @new_producers (name, env_score, corporation_id, address_id)

@@ -5,6 +5,7 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE apply_producer_sponsor_points_SP
+	-- procedimiento para aplicar los puntos que dona una empreza a cierto zipcode.
 	@zip_code INT,
 	@sponsor_points INT
 WITH ENCRYPTION
@@ -31,18 +32,18 @@ BEGIN
 	BEGIN TRY
 		SET @CustomError = 2001
 
-		SELECT @address_id = address_id
-		FROM addresses WITH (TABLOCKX)
+		SELECT @address_id = address_id -- consigue el address_id del zipcode
+		FROM addresses WITH (TABLOCKX) -- se bloquea de forma exclusiva la tabla.
 		WHERE zip_code = @zip_code;
 		
-		WAITFOR DELAY '00:00:10';
+		WAITFOR DELAY '00:00:10'; -- Durante este intervalo se da el erro ya se ejecuta la otra transaccion que bloque la tbla que se va a utilizar a continuación
 
 		SET @count = (SELECT COUNT(*)
-					  FROM producers AS prd WITH (TABLOCKX)
-					  JOIN addresses AS addr WITH (TABLOCKX)
+					  FROM producers AS prd WITH (TABLOCKX) -- se bloquea de forma exclusiva la tabla.
+					  JOIN addresses AS addr WITH (TABLOCKX) -- se bloquea de forma exclusiva la tabla.
 					  ON prd.address_id=addr.address_id
 					  WHERE zip_code = @zip_code);
-		SET @point_reduction = FLOOR(@sponsor_points / @count)
+		SET @point_reduction = FLOOR(@sponsor_points / @count) -- asigna los puntajes de la division de total de puntos donados entre los producers que se donan
 		WAITFOR DELAY '00:00:10';
 
 		UPDATE prd

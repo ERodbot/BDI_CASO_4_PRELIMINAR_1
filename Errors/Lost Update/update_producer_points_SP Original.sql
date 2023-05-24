@@ -5,6 +5,7 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE update_producer_points_SP
+	-- procecimiento para actualizar los puntos de un productor
 	@og_name VARCHAR(30),
 	@alter_points INT
 WITH ENCRYPTION
@@ -33,12 +34,12 @@ BEGIN
 		FROM producers
 		WHERE name = @og_name;
 
-		-- SELECT de los puntaje se realiza fuera del update, lo que cause que se haga primero una lecutra y no haya ningun lock
+		-- SELECT de los puntaje se realiza fuera del update, lo que causa que se haga primero una lecutra y no haya ningun lock
 		SELECT @env_pointsN = env_score + @alter_points
 		FROM producers
 		WHERE producer_id = @producer_id
 
-		WAITFOR DELAY '00:00:10';
+		WAITFOR DELAY '00:00:10'; -- delay para simular concurrencia
 		UPDATE producers
 		SET env_score = @env_pointsN
 		WHERE producer_id = @producer_id;

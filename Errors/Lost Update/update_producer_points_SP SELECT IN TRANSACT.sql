@@ -5,6 +5,7 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE update_producer_points_SP
+	-- procedimiento modificado para realizar un update a los puntajes de los productores
 	@og_name VARCHAR(30),
 	@alter_points INT
 WITH ENCRYPTION
@@ -35,7 +36,7 @@ BEGIN
 		--Se realiza la modificación dentro del mismo update para evitar el lost update.
 
 		SET @CustomError = 2001
-		WAITFOR DELAY '00:00:10';
+		WAITFOR DELAY '00:00:10'; -- delay para simuar concurrencia
 		UPDATE producers
 		SET env_score = env_score + @alter_points
 		WHERE producer_id = @producer_id;

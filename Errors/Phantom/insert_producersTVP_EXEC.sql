@@ -1,5 +1,5 @@
 USE [Esencial Verde]
-
+-- EXEC para ingresar datos de prueba ejecutar de 1°
 DECLARE @new_producers producersTVP;
 
 INSERT INTO @new_producers (name, env_score, corporation_id, address_id)

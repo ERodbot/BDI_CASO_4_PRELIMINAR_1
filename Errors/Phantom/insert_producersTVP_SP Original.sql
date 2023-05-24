@@ -5,6 +5,7 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE insert_producersTVP
+	-- procedimiento para insetar un nuevo productor
 	@producers producersTVP READONLY
 AS 
 BEGIN

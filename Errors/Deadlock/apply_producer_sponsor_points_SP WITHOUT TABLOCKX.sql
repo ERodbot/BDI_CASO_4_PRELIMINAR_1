@@ -5,6 +5,7 @@
 -- Otros detalles de los parametros
 -----------------------------------------------------------
 CREATE PROCEDURE apply_producer_sponsor_points_SP
+	-- procedimiento para aplicar los puntos que dona una empreza a cierto zipcode.
 	@zip_code INT,
 	@sponsor_points INT
 WITH ENCRYPTION
@@ -32,7 +33,7 @@ BEGIN
 		SET @CustomError = 2001
 
 		SELECT @address_id = address_id
-		FROM addresses (UPDLOCK)
+		FROM addresses (UPDLOCK) -- ya no se utiliza un lock exclusivo si no que solo se bloquean los updates para la tabla.
 		WHERE zip_code = @zip_code;
 		
 		WAITFOR DELAY '00:00:10';

@@ -1,5 +1,5 @@
 USE [Esencial Verde]
-
+-- Típo para el TVP
 CREATE TYPE producersTVP AS TABLE
 (
     name varchar(30),
