@@ -32,13 +32,13 @@ BEGIN
 		SET @CustomError = 2001
 
 		SELECT @producer_id = producer_id
-		FROM producers 
+		FROM producers (UPDLOCK)
 		WHERE name = @og_name;
 
 		WAITFOR DELAY '00:00:10';
 
 		SELECT @new_address = address_id
-		FROM addresses
+		FROM addresses (UPDLOCK)
 		WHERE zip_code = @new_zip_code;
 
 		UPDATE producers

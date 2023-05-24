@@ -32,14 +32,14 @@ BEGIN
 		SET @CustomError = 2001
 
 		SELECT @address_id = address_id
-		FROM addresses
+		FROM addresses (UPDLOCK)
 		WHERE zip_code = @zip_code;
 		
 		WAITFOR DELAY '00:00:10';
 
 		SET @count = (SELECT COUNT(*)
-					  FROM producers AS prd
-					  JOIN addresses AS addr
+					  FROM producers AS prd WITH (UPDLOCK)
+					  JOIN addresses AS addr (UPDLOCK)
 					  ON prd.address_id=addr.address_id
 					  WHERE zip_code = @zip_code);
 		SET @point_reduction = FLOOR(@sponsor_points / @count)
