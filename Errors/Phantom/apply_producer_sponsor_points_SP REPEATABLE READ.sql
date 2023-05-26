@@ -24,7 +24,7 @@ BEGIN
 	SET @InicieTransaccion = 0
 	IF @@TRANCOUNT=0 BEGIN
 		SET @InicieTransaccion = 1
-		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE -- Solucion a aislamiento serializable para evitar cambios en las tablas utilizadas
+		SET TRANSACTION ISOLATION LEVEL REPEATABLE READ -- Solucion a aislamiento repeatable read para evitar cambios en las tablas utilizadas
 		BEGIN TRANSACTION		
 	END
 	
